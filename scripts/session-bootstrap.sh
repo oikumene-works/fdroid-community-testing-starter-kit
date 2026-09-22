@@ -5,11 +5,20 @@ repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 cd -- "$repo_root"
 
 echo "Guarded F-Droid community testing bootstrap"
-git status --short --branch 2>/dev/null || echo "Git repository not initialized"
-if git remote -v 2>/dev/null | rg -q .; then
-    echo "Git remote: configured; no external action is implied"
+bootstrap_status=0
+if ! git status --short --branch 2>/dev/null; then
+    echo "Git status: unavailable (Git is missing, failed, or this is not a worktree)"
+    bootstrap_status=1
+fi
+if remotes="$(git remote -v 2>/dev/null)"; then
+    if [[ -n "$remotes" ]]; then
+        echo "Git remote: configured; no external action is implied"
+    else
+        echo "Git remote: none"
+    fi
 else
-    echo "Git remote: none"
+    echo "Git remote: unknown (Git inspection failed)" >&2
+    bootstrap_status=1
 fi
 echo "This bootstrap did not start ADB or an emulator."
 
@@ -36,3 +45,5 @@ fi
 
 echo "Read AGENTS.md, docs/next-session.md, docs/session-continuity.md,"
 echo "docs/protocol.md, and the complete active case records before acting."
+
+exit "$bootstrap_status"

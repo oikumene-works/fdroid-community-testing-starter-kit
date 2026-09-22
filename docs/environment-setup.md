@@ -3,7 +3,7 @@
 ## Host
 
 Use a dedicated Linux user or otherwise isolated working directory. The
-workflow expects Bash, Git, Bubblewrap, curl, jq, XML tools, ShellCheck, Android
+workflow expects Bash, Git, Bubblewrap, curl, jq, ripgrep, XML tools, ShellCheck, Android
 SDK command-line tools, GitHub CLI, and GitLab CLI. Usable KVM acceleration and
 a graphical display are required by the supported reference execution profile.
 

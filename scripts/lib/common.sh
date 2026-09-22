@@ -15,6 +15,19 @@ require_tools() {
     done
 }
 
+# A negative search is a guard only if "no match" is distinguished from failure.
+reject_rg_matches() {
+    local message="$1"
+    local search_status=0
+    shift
+    rg "$@" || search_status=$?
+    case "$search_status" in
+        0) die "$message" ;;
+        1) return 0 ;;
+        *) die "ripgrep search failed (exit $search_status); check did not complete" ;;
+    esac
+}
+
 require_clean_repository_checkpoint() {
     local worktree_state
 

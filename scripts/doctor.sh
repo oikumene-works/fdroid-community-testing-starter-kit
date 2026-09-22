@@ -93,11 +93,16 @@ else
     blocked=$((blocked + 1))
 fi
 
-if git remote -v | rg -q .; then
-    echo "  WARNING  Git remote is configured; this is normal for a clone but authorizes nothing"
-    warnings=$((warnings + 1))
+if remotes="$(git remote -v 2>/dev/null)"; then
+    if [[ -n "$remotes" ]]; then
+        echo "  WARNING  Git remote is configured; this is normal for a clone but authorizes nothing"
+        warnings=$((warnings + 1))
+    else
+        echo "  READY    no Git remote is configured"
+    fi
 else
-    echo "  READY    no Git remote is configured"
+    echo "  BLOCKED  Git remote state is unknown (Git inspection failed)"
+    blocked=$((blocked + 1))
 fi
 
 echo "This doctor did not use network access, download software, accept licenses, start ADB, or start an emulator."

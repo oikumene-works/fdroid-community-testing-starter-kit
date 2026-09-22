@@ -6,6 +6,8 @@ test_root="$(mktemp -d)"
 trap 'rm -rf -- "$test_root"' EXIT
 fixture="$test_root/repo"
 mkdir -p "$fixture/scripts" "$fixture/templates" "$fixture/cases"
+mkdir -p "$fixture/scripts/lib"
+cp "$repo_root/scripts/lib/common.sh" "$fixture/scripts/lib/"
 cp "$repo_root/scripts/create-case.sh" "$repo_root/scripts/check-case-records.sh" \
     "$fixture/scripts/"
 cp "$repo_root/templates/"* "$fixture/templates/"

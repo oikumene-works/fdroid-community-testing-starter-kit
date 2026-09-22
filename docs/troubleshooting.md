@@ -11,6 +11,19 @@ means review is needed but the doctor found no hard blocker. The doctor checks
 the configured platform, build-tools version, system image, KVM, and display;
 command availability alone is insufficient.
 
+## A check reports a missing or failed ripgrep
+
+The bootstrap and doctor's Git-remote inspection do not require ripgrep. They
+can report the existing remote while the doctor separately reports `rg` missing
+for later verification. `check-all.sh`, `check-case-records.sh` and the standalone
+link check require `rg` before any success is reported. Stop at that prerequisite
+and choose any installation separately; the scripts do not install it for you.
+
+A search with no matches is a normal result; a search error is not. Failed link
+extraction or enumeration and failed negative guard searches return nonzero.
+Keep the first error rather than treating empty output as a successful check.
+For entry-command exit statuses, see [Start here](start-here.md).
+
 ## KVM is unavailable
 
 Confirm virtualization is enabled, `/dev/kvm` exists, and the current user has

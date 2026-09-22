@@ -7,6 +7,12 @@ environment readiness as authorization to download or execute a candidate.
 
 ## Current state
 
+New local task: address newcomer issue #1 in this kit and the adaptive seed.
+The operator authorized corrections and a reply draft; the Battleship MR stays
+quiet. Read [missing-tool-review.md](missing-tool-review.md) for reproduction,
+tests and the canonical draft. No new push/comment is approved. Stop at checked
+local commits for review; use a fresh session for any authorized publication.
+
 - This is the clean starter-kit handoff.
 - No active candidate is selected in the distributed repository.
 - No candidate APK, emulator session, isolated ADB server, or transient test
@@ -62,7 +68,8 @@ seed case records.
 
 ## Post-publication waiting condition
 
-The operator selected a clean stop while awaiting voluntary workflow feedback.
+The earlier clean stop ended when newcomer issue #1 arrived; the bounded local
+correction above is now selected.
 No response, adoption, evaluation or support obligation is assumed. A concrete
 question can reopen the relevant guide; no monitor or new test is scheduled.
 Codex added the observed GitLab JSON-input and response-retention lesson to

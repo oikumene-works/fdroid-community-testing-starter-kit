@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
+# shellcheck source-path=SCRIPTDIR
 
 repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 cd -- "$repo_root"
+# shellcheck source=scripts/lib/common.sh
+source "$repo_root/scripts/lib/common.sh"
+require_tools rg find sort
 
 active_case=""
 if [[ -e cases/active-case ]]; then
@@ -21,8 +25,11 @@ if [[ -e cases/active-case ]]; then
     }
 fi
 
+case_directories="$(find cases -mindepth 1 -maxdepth 1 -type d -print | LC_ALL=C sort)" || \
+    die "Case directory enumeration failed"
 checked=0
 while IFS= read -r case_dir; do
+    [[ -n "$case_dir" ]] || continue
     case_id="${case_dir##*/}"
     [[ "$case_id" =~ ^[a-z0-9][a-z0-9-]*$ ]] || {
         echo "Invalid case directory: $case_dir" >&2
@@ -39,10 +46,8 @@ while IFS= read -r case_dir; do
         exit 1
     }
     if [[ "$case_id" == "$active_case" ]]; then
-        if rg -n -F 'CHANGE''ME' "$case_dir"; then
-            echo "Active case contains unresolved values" >&2
-            exit 1
-        fi
+        reject_rg_matches "Active case contains unresolved values" \
+            -n -F 'CHANGE''ME' "$case_dir"
         rg -Fxq 'CLAIM_REVIEW_STATUS=PASS' "$case_dir/case.env" || {
             echo "Active case claim review is not PASS" >&2
             exit 1
@@ -51,15 +56,13 @@ while IFS= read -r case_dir; do
             echo "Active case APK qualification is not PASS" >&2
             exit 1
         }
-        ! rg -q '=PENDING_APK_QUALIFICATION$' "$case_dir/case.env" || {
-            echo "Active case still has a pending built-APK surface" >&2
-            exit 1
-        }
+        reject_rg_matches "Active case still has a pending built-APK surface" \
+            -q '=PENDING_APK_QUALIFICATION$' "$case_dir/case.env"
         echo "Active case record: $case_id (activation gates complete)"
     else
         echo "Inactive pending case checkpoint: $case_id"
     fi
     checked=$((checked + 1))
-done < <(find cases -mindepth 1 -maxdepth 1 -type d -print | LC_ALL=C sort)
+done <<< "$case_directories"
 
 echo "Case record checks passed: $checked case directories; active=${active_case:-none}."

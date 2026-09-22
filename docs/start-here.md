@@ -10,8 +10,13 @@ Human usability or broad effectiveness has not been established by agent runs.
 ## First useful outcome: understand your next step
 
 Use your own clone in a separate working directory. Installing software or
-accepting licenses is not part of this first exercise. Git and Bash are needed
-for these entry commands; if unavailable, read the files on GitHub first.
+accepting licenses is not part of this first exercise. The entry commands need
+Bash, Git and standard shell utilities (including `cat`, `dirname` and `sed`).
+If those are unavailable, read the files on GitHub first. You do not need to
+install the Android SDK, ripgrep (`rg`), `jq`, `xmllint`, ShellCheck or Bubblewrap
+just to get the first diagnosis. Those are examples of later reference-workflow
+requirements that the doctor can report missing; a missing item is not an
+instruction to install it. See [environment setup](environment-setup.md).
 
 ```sh
 git clone https://github.com/oikumene-works/fdroid-community-testing-starter-kit.git
@@ -20,11 +25,19 @@ cd fdroid-community-testing-starter-kit
 ./scripts/doctor.sh
 ```
 
-These entry commands inspect local state; they do not download an APK, start
-Android or publish anything. Read the root instructions and printed handoff.
+After cloning, these entry commands inspect local state; they do not download
+an APK, start Android or publish anything. Read the root instructions and printed handoff.
 The kit checks a documented reference environment and reports READY, WARNING
 or BLOCKED. Review the named prerequisites; a missing tool is not permission
 to install it. It does not choose or adapt a new platform automatically.
+
+`session-bootstrap.sh` exits 0 after a successful local inspection; a Git
+inspection failure is reported as unknown and returns nonzero. The reference
+`doctor.sh` exits 0 for READY or WARNING and 1 for BLOCKED. An unexpected script
+error also returns nonzero: read the diagnostic, not just `$?`. Capture `$?`
+immediately after the command; a later command or pipeline may replace it.
+A nonzero result can still complete this first exercise by naming a truthful
+blocker. It does not authorize proceeding past that blocker.
 
 If working with a repository-aware agent, this is a sufficient first request:
 

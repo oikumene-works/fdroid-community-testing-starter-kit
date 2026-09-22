@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
+# shellcheck source-path=SCRIPTDIR
 
 repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 cd -- "$repo_root"
+# shellcheck source=scripts/lib/common.sh
+source "$repo_root/scripts/lib/common.sh"
+require_tools rg git shellcheck find sort awk
+
+if [[ "${REQUIRE_NO_REMOTE:-0}" == "1" ]]; then
+    remotes="$(git remote -v)" || die "Git remote state is unknown; check did not complete"
+    [[ -z "$remotes" ]] || die "A Git remote is configured but REQUIRE_NO_REMOTE=1."
+fi
 
 if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     git diff --check
@@ -46,23 +55,18 @@ forbidden="$(find . -path './.git' -prune -o -path './.local' -prune -o \
 }
 
 template_marker="CHANGE""ME"
-if rg -n -F "$template_marker" --glob '!templates/**' --glob '!cases/**' \
-    --glob '!.git/**' --glob '!.local/**'; then
-    echo "Unresolved template value outside templates." >&2
-    exit 1
-fi
-if rg -n '/home/[^ /]+|/Users/[^ /]+|[A-Za-z]:\\Users\\|jwennstrom' \
-    --glob '!scripts/check-all.sh' --glob '!.git/**' --glob '!.local/**'; then
-    echo "Workstation-specific path or identity found." >&2
-    exit 1
-fi
-if rg -n 'AKIA[0-9A-Z]{16}|glpat-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}' \
-    --glob '!scripts/check-all.sh' --glob '!.git/**' --glob '!.local/**'; then
-    echo "Possible credential found." >&2
-    exit 1
-fi
+reject_rg_matches "Unresolved template value outside templates." \
+    -n -F "$template_marker" --glob '!templates/**' --glob '!cases/**' \
+    --glob '!.git/**' --glob '!.local/**'
+reject_rg_matches "Workstation-specific path or identity found." \
+    -n '/home/[^ /]+|/Users/[^ /]+|[A-Za-z]:\\Users\\|jwennstrom' \
+    --glob '!scripts/check-all.sh' --glob '!.git/**' --glob '!.local/**'
+reject_rg_matches "Possible credential found." \
+    -n 'AKIA[0-9A-Z]{16}|glpat-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}' \
+    --glob '!scripts/check-all.sh' --glob '!.git/**' --glob '!.local/**'
 
 ./tests/check-links.sh
+./tests/missing-tool-tests.sh
 ./scripts/check-case-records.sh
 ./tests/guard-tests.sh
 ./tests/case-checkpoint-tests.sh
@@ -70,11 +74,6 @@ fi
 ./tests/apk-qualification-tests.sh
 ./tests/source-scan-tests.sh
 ./tests/readiness-tests.sh
-
-if [[ "${REQUIRE_NO_REMOTE:-0}" == "1" ]] && git remote -v 2>/dev/null | rg -q .; then
-    echo "A Git remote is configured but REQUIRE_NO_REMOTE=1." >&2
-    exit 1
-fi
 
 echo "Offline repository and guard checks passed."
 echo "Tests may create and remove bounded ignored-local fixtures; no network or Android action occurred."
