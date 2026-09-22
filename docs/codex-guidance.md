@@ -45,3 +45,11 @@ run before acting. Do not mutate files or external state.
 Restart the session after changing an instruction file. Do not publish global
 account instructions, chat transcripts, hidden prompts, workstation paths, or
 claims about model internals as part of a project handoff.
+
+## Reusable answers
+
+For newcomer questions, follow [Start here](start-here.md#questions-and-improvements):
+put reusable explanations in the existing public guide and answer briefly with
+a link to its relevant section. Use direct help when privacy, urgent recovery or
+a case-specific environment requires it. Do not publish updates without the
+operator's authority, promise a support service or add speculative FAQs.

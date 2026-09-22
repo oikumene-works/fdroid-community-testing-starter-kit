@@ -8,7 +8,10 @@ emulator execution, report review, and public posting.
 This is not an F-Droid project. A local result is community evidence only, not
 an F-Droid review, acceptance decision, security audit, or endorsement.
 
-## Quick start
+**New here?** [Start with one read-only exercise](docs/start-here.md), including
+prerequisites, scope limits and where to ask useful questions. This is experimental.
+
+## Reference setup after the first exercise
 
 The supported reference environment is a Linux host with Bubblewrap, an Android
 SDK, a visible Android emulator, and usable KVM acceleration.

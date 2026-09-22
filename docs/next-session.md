@@ -28,7 +28,27 @@ and pending approvals. Do not append an unbounded session diary.
    `claims.md`, `qualification.md`, and `report.md` completely.
 4. Verify the worktree and remote state before acting.
 
-## Safest next slice
+## Documentation preparation — 2026-09-22
+
+The operator authorized checking newcomer entry points and preparing improvements
+before sharing links. README now links docs/start-here.md; docs/codex-guidance.md
+records documentation-first help. These are documentation-only changes from
+published baseline 5a54da63a58b22c8715778a31931394769b60d72. No script, protocol
+or execution gate changed. The case-specific comparison checkout was preserved.
+No APK, Android session, account setup or external mutation was performed here.
+The work is locally prepared and check-all passed before commit; publication
+is a separately selected next action.
+After publication, newcomers should begin with the linked read-only exercise.
+
+## Bounded retrospective
+
+The existing prerequisites were available for the read-only doctor; missing
+local configuration was correctly reported without creating it. Codex prepared
+and checked the guide, so this does not establish a new operator's experience.
+The operator requested reusable answers behind links; the small entrance page
+addresses that need without changing the guarded process or promising support.
+
+## Safest next slice for a new operator
 
 Run the read-only environment doctor, explicitly initialize ignored local state,
 then run the offline checks and fictional dry run. Creating an AVD is a separate
