@@ -77,6 +77,34 @@ stores `.local/runtime/CASE_ID-posting-ambiguity.json`. Keep that receipt and
 run `./scripts/recover-posted-comment.sh --case CASE_ID`; recovery is read-only
 and succeeds only for exactly one matching body by the approved account.
 
+## A custom GitLab reply request fails
+
+First distinguish an authentication failure from an invalid request or a lost
+response. A successful read-only account lookup verifies the current identity;
+it does not prove write permissions. Retain the returned HTTP status and error
+before deciding whether credentials, scopes or the request need changing.
+Recommend an authentication change only when the observed failure supports it.
+Never include credentials or authorization headers in diagnostics.
+
+For a separately approved follow-up reply, keep its canonical body, digest and
+receipt distinct from the original report; do not clear a posted-note receipt
+to reuse the original posting helper. Use the same clean-checkpoint, exact-text,
+account and duplicate checks. Save response/error output in restricted ignored
+local files before parsing it, bound the request time, and preserve an attempt
+marker if interrupted. A timeout does not prove the server rejected a write.
+Read all note pages and verify the exact body and author before deciding what
+happened; never automatically repeat an ambiguous POST. Record the verified
+receipt, then remove the temporary diagnostics during closeout.
+
+Codex reproduced a request-construction pitfall in glab 1.107.0 using a local
+HTTP receiver and a dummy token: `--input` passed JSON bytes without setting
+Content-Type. For JSON input, set `--header 'Content-Type: application/json'`
+explicitly. The corrected request supplied the header and the subsequently
+approved GitLab reply succeeded. The first reply attempt's lost response means
+its original failure cause remains unproven; this was not evidence of a GitLab
+outage or an authentication defect. See the versioned
+[request implementation](https://gitlab.com/gitlab-org/cli/-/blob/v1.107.0/internal/commands/api/http.go).
+
 ## Cleanup failed
 
 Do not continue testing or delete broad directories. Record the exact local

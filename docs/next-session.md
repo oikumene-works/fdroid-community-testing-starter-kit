@@ -60,6 +60,17 @@ state. The reviewed guides matched their public copies. No process change is
 proposed for this repository; the separate MR reply is owned by the adaptive
 seed case records.
 
+## Post-publication waiting condition
+
+The operator selected a clean stop while awaiting voluntary workflow feedback.
+No response, adoption, evaluation or support obligation is assumed. A concrete
+question can reopen the relevant guide; no monitor or new test is scheduled.
+Codex added the observed GitLab JSON-input and response-retention lesson to
+[troubleshooting](troubleshooting.md#a-custom-gitlab-reply-request-fails) during
+the authorized final documentation closeout. No script, credential or execution
+gate changed. Existing authentication succeeded in the approved reply; revisit
+it only if later observed authentication friction justifies a specific change.
+
 ## Safest next slice for a new operator
 
 Run the read-only environment doctor, explicitly initialize ignored local state,
