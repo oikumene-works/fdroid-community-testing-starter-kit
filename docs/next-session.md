@@ -7,11 +7,17 @@ environment readiness as authorization to download or execute a candidate.
 
 ## Current state
 
-New local task: address newcomer issue #1 in this kit and the adaptive seed.
-The operator authorized corrections and a reply draft; the Battleship MR stays
-quiet. Read [missing-tool-review.md](missing-tool-review.md) for reproduction,
-tests and the canonical draft. No new push/comment is approved. Stop at checked
-local commits for review; use a fresh session for any authorized publication.
+The issue #1 fixes in both workflow repositories are committed locally. The
+operator revised the shared reply; Codex finalized its wording and saved the
+same body in both repositories. Read [missing-tool-review.md](missing-tool-review.md)
+for implementation checkpoints, reproduction, tests and the canonical reply
+digest, then [missing-tool-reply.md](missing-tool-reply.md) for the exact text.
+No correction from this issue round has been pushed and no issue reply posted.
+No new push or issue comment has been approved. Continue in a fresh session:
+review the final reply and publication scope, then seek approval for pushing both
+repositories, verifying the linked public notes, and posting the issue replies
+in that order. Leave the Battleship MR quiet. Earlier publication is complete
+and must not be repeated.
 
 - This is the clean starter-kit handoff.
 - No active candidate is selected in the distributed repository.

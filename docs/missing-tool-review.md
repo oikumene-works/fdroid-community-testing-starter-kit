@@ -10,7 +10,7 @@ lack of obligation to reciprocate the Battleship testing.
 
 Canonical proposed reply: [missing-tool-reply.md](missing-tool-reply.md).
 SHA-256 including final newline:
-d541ead712cd8cfe5b7bbcb431b46b1fc45fd25942ba317d4f27d37ceffddc3e.
+13becf37805772cbb9fc383ce870a7ce1d2d08159632e2012fcdcc63b51154e2.
 The same proposed body is retained in both repositories. Review exact text,
 repository publication and the established account before posting it; verify
 the linked public review notes after publishing the fixes and before commenting; the prior
@@ -28,8 +28,11 @@ Battleship publication approval does not cover these new issue comments.
 
 Codex read the MR and issues, reproduced the reported behavior, implemented the
 corrections, wrote the tests and documentation, and drafted the proposed reply.
-The operator selected the scope and communication approach. No independent
-human reproduction or reporter validation of the patch is yet recorded.
+The operator selected the scope and revised the reply to welcome further
+experimentation without implying a repayment obligation. Codex then corrected
+the typo and removed a repeated disclaimer while preserving that invitation.
+No independent human reproduction or reporter validation of the patch is yet
+recorded.
 
 ## Reproduction and interpretation
 
@@ -74,8 +77,9 @@ no-remote enforcement; valid/broken/link-free documents; extraction errors; each
 negative repository scan; active pending-field and placeholder guards; and file
 enumeration failures. The same shared suite is used in the adaptive repository.
 
-Targeted cases passed: 24. The full check-all suite passed in both repositories; the final
-documentation/draft update is checked again before the local commits. These are synthetic PATH/error-injection tests on this
+Targeted cases passed: 24. The full check-all suite passed in both repositories;
+the final documentation/draft tree must pass again before its local commit.
+These are synthetic PATH/error-injection tests on this
 Linux host, not a new operator trial, cross-platform validation or APK execution.
 Fixtures are bounded under ignored .local and deleted by the tests. No browser,
 Android session, download, external mutation or authentication change occurred.
@@ -89,3 +93,11 @@ kept the conversation in the issues and requested that optional feedback not
 become a perceived repayment obligation. No broad scanner rewrite, new framework
 or general environment installation is included. Stop at checked local commits
 and the exact reply draft; review publication separately in a fresh session.
+
+The implementation checkpoint in this repository is
+a7642a277ed8596b831c03cdbf673ab45e161fbe; the reply revision is a later
+local documentation checkpoint. Neither checkpoint has been pushed. In the next
+session, review the exact reply and publication scope first. The proposed order
+is to push both repositories, verify the linked public review notes, and only
+then post the approved body to each issue as the verified GitHub account
+`oikumene-admin`. No new Battleship MR comment is proposed.
